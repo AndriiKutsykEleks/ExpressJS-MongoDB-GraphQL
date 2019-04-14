@@ -1,22 +1,13 @@
 const express = require('express');
-const MongoClient = require("mongodb").MongoClient;
+const bodyParser = require('body-parser');
+const config = require('./config/config');
+const routes = require('./routes/routes');
+const mongoConnect = require('./shared/mongo');
 const app = express();
-const port = 3000;
 
-MongoClient.connect('mongodb://localhost:27017/', (err, client) => {
-    if (err) {
-        throw err;
-    }
-
-    client.db('shop').collection('product').find().toArray((err, result) => {
-        if (err) {
-            throw err;
-        }
-
-        console.log(result);
-    });
+mongoConnect.then(() => {
+    routes(app);
+    app.use(bodyParser.json());
+    app.use(bodyParser.urlencoded({ extended: true }));
+    app.listen(config.port, () => console.log(`Web Shop listening on port ${config.port}!`))
 });
-
-app.get('/', (req, res) => res.send('Hello World!'));
-
-app.listen(port, () => console.log(`Example app listening on port ${port}!`));
