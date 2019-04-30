@@ -1,9 +1,9 @@
 const mongoose = require('mongoose');
 const userSchema = mongoose.Schema({
-    id: Number,
+    id: String,
     firstName: String,
     lastName: String,
-    dob: Date,
+    dob: Number,
     isAdmin: Boolean
 });
 
