@@ -1,14 +1,25 @@
 const router = require('express').Router();
+const crudService = require('../../services/crudService');
+const OrderModel = require('./../../models/Order');
 
 router.get('/', (req, res) => {
-    const data = [{
-        id: 1,
-        userId: 1,
-        products: [1],
-        date: 1555230700,
-        status: 'pending'
-    }];
-    res.status(200).send(data);
+    crudService.findAll(OrderModel, res);
+});
+
+router.get('/:id', (req, res) => {
+    crudService.findAll(OrderModel, res, req.params.id);
+});
+
+router.post('/', (req, res) => {
+    crudService.save(OrderModel, res, req.body);
+});
+
+router.put('/', (req, res) => {
+    crudService.updateById(OrderModel, res, req.body);
+});
+
+router.delete('/', (req, res) => {
+    crudService.deleteById(OrderModel, res, req.body._id);
 });
 
 module.exports = router;
