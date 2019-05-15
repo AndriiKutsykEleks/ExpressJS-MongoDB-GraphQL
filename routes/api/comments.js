@@ -14,12 +14,12 @@ router.post('/', (req, res) => {
     crudService.save(CommentModel, res, req.body);
 });
 
-router.put('/', (req, res) => {
-    crudService.updateById(CommentModel, res, req.body);
+router.put('/:id', (req, res) => {
+    crudService.updateById(CommentModel, res, req);
 });
 
-router.delete('/', (req, res) => {
-    crudService.deleteById(CommentModel, res, req.body._id);
+router.delete('/:id', (req, res) => {
+    crudService.deleteById(CommentModel, res, req.params.id);
 });
 
 module.exports = router;

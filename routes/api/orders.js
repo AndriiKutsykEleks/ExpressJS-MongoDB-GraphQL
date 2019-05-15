@@ -14,12 +14,12 @@ router.post('/', (req, res) => {
     crudService.save(OrderModel, res, req.body);
 });
 
-router.put('/', (req, res) => {
-    crudService.updateById(OrderModel, res, req.body);
+router.put('/:id', (req, res) => {
+    crudService.updateById(OrderModel, res, req);
 });
 
-router.delete('/', (req, res) => {
-    crudService.deleteById(OrderModel, res, req.body._id);
+router.delete('/:id', (req, res) => {
+    crudService.deleteById(OrderModel, res, req.params.id);
 });
 
 module.exports = router;

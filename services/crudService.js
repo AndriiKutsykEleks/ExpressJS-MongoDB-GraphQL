@@ -24,11 +24,11 @@ const save = (model, res, body, isDataSend = true) => {
         .catch(err => errorService(res, err.message));
 };
 
-const updateById = (model, res, body, isDataSend = true) => {
+const updateById = (model, res, req, isDataSend = true) => {
     return model
         .findOneAndUpdate(
-            { _id: body._id },
-            { $set: body },
+            { _id: req.params.id },
+            { $set: req.body },
             { new: true }
         )
         .then(data => {
