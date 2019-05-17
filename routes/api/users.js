@@ -1,46 +1,25 @@
 const router = require('express').Router();
+const crudService = require('../../services/crudService');
 const UserModel = require('./../../models/User');
-const error = require('./../../shared/error');
 
 router.get('/', (req, res) => {
-    UserModel
-        .find({})
-        .then(data => res.status(200).send(data))
-        .catch(err => error(res, err.message));
+    crudService.findAll(UserModel, res);
 });
 
 router.get('/:id', (req, res) => {
-    UserModel
-        .findById(req.params.id)
-        .then(data => {
-            res.status(200).send(data)
-        })
-        .catch(err => error(res, err.message));
+    crudService.findAll(UserModel, res, req.params.id);
 });
 
 router.post('/', (req, res) => {
-    UserModel(req.body)
-        .save()
-        .then(() => res.status(200).send({msg: 'User is saved'}))
-        .catch(err => error(res, err.message));
+    crudService.save(UserModel, res, req.body);
 });
 
-router.put('/', (req, res) => {
-    UserModel
-        .findOneAndUpdate(
-            { _id: req.body._id },
-            { $set: req.body },
-            { new: true }
-        )
-        .then(() => res.status(200).send({msg: 'User is updated'}))
-        .catch(err => error(res, err.message));
+router.put('/:id', (req, res) => {
+    crudService.updateById(UserModel, res, req);
 });
 
-router.delete('/', (req, res) => {
-    UserModel
-        .findOneAndRemove({ _id: req.body._id })
-        .then(() => res.status(200).send({msg: 'User is deleted'}))
-        .catch(err => error(res, err.message));
+router.delete('/:id', (req, res) => {
+    crudService.deleteById(UserModel, res, req.params.id);
 });
 
 module.exports = router;
