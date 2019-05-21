@@ -1,6 +1,9 @@
 const router = require('express').Router();
 const crudService = require('../../services/crudService');
+const validateService = require('./../../services/validateService');
 const ProductModel = require('./../../models/Product');
+
+const VALID_TYPE = 'product';
 
 router.get('/', (req, res) => {
     crudService.findAll(ProductModel, res);
@@ -11,11 +14,19 @@ router.get('/:id', (req, res) => {
 });
 
 router.post('/', (req, res) => {
-    crudService.save(ProductModel, res, req.body);
+    const valid = validateService.validateData(res, req.body, VALID_TYPE);
+
+    if (valid) {
+        crudService.save(ProductModel, res, req.body);
+    }
 });
 
 router.put('/:id', (req, res) => {
-    crudService.updateById(ProductModel, res, req);
+    const valid = validateService.validateData(res, req.body, VALID_TYPE);
+
+    if (valid) {
+        crudService.updateById(ProductModel, res, req);
+    }
 });
 
 router.delete('/:id', (req, res) => {

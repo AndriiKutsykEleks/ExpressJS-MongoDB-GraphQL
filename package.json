@@ -19,6 +19,7 @@
   },
   "homepage": "https://github.com/AndriiKutsykEleks/ExpressJS-MongoDB-GraphQL#readme",
   "dependencies": {
+    "ajv": "^6.10.0",
     "body-parser": "^1.18.3",
     "express": "^4.16.4",
     "mongodb": "^3.2.2",
