@@ -4,14 +4,14 @@ const findAll = (model, res, isDataSend = true) => {
     return model
         .find({})
         .then(data => isDataSend ? res.status(200).send(data) : data)
-        .catch(err => errorService(res, err.message));
+        .catch(err => errorService.sendError(res, err.message));
 };
 
 const findById = (model, res, id, isDataSend = true) => {
     return model
         .findById(id)
         .then(data => isDataSend ? res.status(200).send(data) : data)
-        .catch(err => errorService(res, err.message));
+        .catch(err => errorService.sendError(res, err.message));
 };
 
 const save = (model, res, body, isDataSend = true) => {
@@ -21,7 +21,7 @@ const save = (model, res, body, isDataSend = true) => {
             const msg = `${ model.modelName } is saved`;
             return isDataSend ? res.status(200).send({ msg }) : data;
         })
-        .catch(err => errorService(res, err.message));
+        .catch(err => errorService.sendError(res, err.message));
 };
 
 const updateById = (model, res, req, isDataSend = true) => {
@@ -35,7 +35,7 @@ const updateById = (model, res, req, isDataSend = true) => {
             const msg = `${ model.modelName } is updated`;
             return isDataSend ? res.status(200).send({ msg }) : data;
         })
-        .catch(err => errorService(res, err.message));
+        .catch(err => errorService.sendError(res, err.message));
 };
 
 const deleteById = (model, res, id, isDataSend = true) => {
