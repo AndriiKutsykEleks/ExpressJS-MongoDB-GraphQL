@@ -1,25 +1,35 @@
 const router = require('express').Router();
 const crudService = require('../../services/crudService');
+const validationMiddleware = require('./../../middlewares/validation');
 const OrderModel = require('./../../models/Order');
 
-router.get('/', (req, res) => {
-    crudService.findAll(OrderModel, res);
-});
+const VALID_TYPE = 'order';
 
-router.get('/:id', (req, res) => {
-    crudService.findAll(OrderModel, res, req.params.id);
-});
+router.get(
+    '/',
+    (req, res) => crudService.findAll(OrderModel, res)
+);
 
-router.post('/', (req, res) => {
-    crudService.save(OrderModel, res, req.body);
-});
+router.get(
+    '/:id',
+    (req, res) => crudService.findAll(OrderModel, res, req.params.id)
+);
 
-router.put('/:id', (req, res) => {
-    crudService.updateById(OrderModel, res, req);
-});
+router.post(
+    '/',
+    (req, res, next) => validationMiddleware(req, res, next, VALID_TYPE),
+    (req, res) => crudService.save(OrderModel, res, req.body)
+);
 
-router.delete('/:id', (req, res) => {
-    crudService.deleteById(OrderModel, res, req.params.id);
-});
+router.put(
+    '/:id',
+    (req, res, next) => validationMiddleware(req, res, next, VALID_TYPE),
+    (req, res) => crudService.updateById(OrderModel, res, req)
+);
+
+router.delete(
+    '/:id',
+    (req, res) => crudService.deleteById(OrderModel, res, req.params.id)
+);
 
 module.exports = router;
