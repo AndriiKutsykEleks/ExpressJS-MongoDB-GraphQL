@@ -3,6 +3,7 @@ const bodyParser = require('body-parser');
 const config = require('./config');
 const routes = require('./routes');
 const mongoConnect = require('./shared/mongo');
+
 const app = express();
 
 mongoConnect.then(() => {

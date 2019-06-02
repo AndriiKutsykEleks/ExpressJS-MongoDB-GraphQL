@@ -2,8 +2,7 @@ const router = require('express').Router();
 const crudService = require('../../services/crudService');
 const validationMiddleware = require('./../../middlewares/validation');
 const OrderModel = require('./../../models/Order');
-
-const VALID_TYPE = 'order';
+const { SCHEMAS, SCHEMAS_TYPE } = require('./../../shared/constants');
 
 router.get(
     '/',
@@ -17,13 +16,13 @@ router.get(
 
 router.post(
     '/',
-    validationMiddleware(VALID_TYPE),
+    validationMiddleware(SCHEMAS.ORDER, SCHEMAS_TYPE.CREATE),
     (req, res) => crudService.save(OrderModel, res, req.body)
 );
 
 router.put(
     '/:id',
-    validationMiddleware(VALID_TYPE),
+    validationMiddleware(SCHEMAS.ORDER, SCHEMAS_TYPE.UPDATE),
     (req, res) => crudService.updateById(OrderModel, res, req)
 );
 
