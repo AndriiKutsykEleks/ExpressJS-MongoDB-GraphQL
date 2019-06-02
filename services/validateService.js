@@ -3,7 +3,7 @@ const crudService = require('./crudService');
 const validationSchemas = require('./../validation/schemas');
 const { REST_METHODS_WITH_ID } = require('./../shared/constants');
 
-const isDataExist = (req, res, params) => {
+const isDataExist = async (req, res, params) => {
     const value = req.body[params.key];
 
     let valid = true;
@@ -18,15 +18,16 @@ const isDataExist = (req, res, params) => {
                 }
             });
         } else {
-            valid = isDataExistById(params.model, res, value);
+            valid = await isDataExistById(params.model, res, value);
         }
     }
 
     return valid;
 };
 
-const isDataExistById = (model, res, value) => {
-    return !!crudService.findById(model, res, value, false);
+const isDataExistById = async (model, res, value) => {
+    const data = await crudService.findById(model, res, value, false);
+    return !!data;
 };
 
 const validateRequestData = (req, res, params) => {
