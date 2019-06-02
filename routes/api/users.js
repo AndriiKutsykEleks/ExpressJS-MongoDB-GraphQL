@@ -1,7 +1,7 @@
 const router = require('express').Router();
-const crudService = require('./../../services/crudService');
-const validationMiddleware = require('./../../middlewares/validation');
-const UserModel = require('./../../models/User');
+const { crudService } = require('./../../services');
+const { validationMiddleware } = require('./../../middlewares');
+const { UserModel } = require('./../../models');
 const { SCHEMAS, SCHEMAS_TYPE } = require('./../../shared/constants');
 
 router.get(
@@ -11,7 +11,7 @@ router.get(
 
 router.get(
     '/:id',
-    (req, res) => crudService.findAll(UserModel, res, req.params.id)
+    (req, res) => crudService.findById(UserModel, res, req.params.id)
 );
 
 router.post(
