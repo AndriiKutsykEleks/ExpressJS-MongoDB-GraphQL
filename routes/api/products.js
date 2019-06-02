@@ -17,13 +17,13 @@ router.get(
 
 router.post(
     '/',
-    (req, res, next) => validationMiddleware(req, res, next, VALID_TYPE),
+    validationMiddleware(VALID_TYPE),
     (req, res) => crudService.save(ProductModel, res, req.body)
 );
 
 router.put(
     '/:id',
-    (req, res, next) => validationMiddleware(req, res, next, VALID_TYPE),
+    validationMiddleware(VALID_TYPE),
     (req, res) => crudService.updateById(ProductModel, res, req)
 );
 
