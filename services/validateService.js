@@ -9,25 +9,20 @@ const isDataExist = async (req, res, params) => {
     let valid = true;
 
     if (value) {
-        if (Array.isArray(value)) {
-            value.every(item => {
+        if (Array.isArray(value) && value.length > 0) {
+            for (let i = 0; i < value.length; i++) {
                 if (valid) {
-                    valid = isDataExistById(params.model, res, item.id);
+                    valid = !!await crudService.findById(params.model, res, value[i]._id, false);
                 } else {
-                    return valid;
+                    break;
                 }
-            });
+            }
         } else {
-            valid = await isDataExistById(params.model, res, value);
+            valid = !!await crudService.findById(params.model, res, value, false);
         }
     }
 
     return valid;
-};
-
-const isDataExistById = async (model, res, value) => {
-    const data = await crudService.findById(model, res, value, false);
-    return !!data;
 };
 
 const validateRequestData = (req, res, params) => {
@@ -40,7 +35,7 @@ const validateRequestData = (req, res, params) => {
     let message = 'Validation schema is not finding';
 
     if (validationSchemaByType) {
-        const data = id ? Object.assign({ id }, req.body) : req.body
+        const data = id ? Object.assign({ id }, req.body) : req.body;
 
         valid = ajv.validate(validationSchemaByType, data);
         message = !valid ? `${ajv.errors[0].dataPath} ${ajv.errors[0].message}` : '';

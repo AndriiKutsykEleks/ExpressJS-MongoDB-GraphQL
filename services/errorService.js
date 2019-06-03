@@ -1,8 +1,8 @@
 const sendError = (res, msg, code) => {
-    if (code !== 500) {
+    if (code && code !== 500) {
         res.status(code).send({ error: msg });
     } else {
-        res.status(500).send({ error: 'Server not access' })
+        res.status(500).send({ error: `Server not access. ${msg}` })
     }
 };
 
