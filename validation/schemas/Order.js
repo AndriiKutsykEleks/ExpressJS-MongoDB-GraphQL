@@ -1,7 +1,8 @@
 const productSchema = require('./Product');
+const { SCHEMAS_TYPE } = require('./../../shared/constants');
+
 const orderSchema = {
     type: 'object',
-    required: ['userId', 'products', 'date', 'status'],
     properties: {
         id: { type: 'string' },
         userId: { type: 'string' },
@@ -14,4 +15,15 @@ const orderSchema = {
     }
 };
 
-module.exports = orderSchema;
+const createSchema = Object.assign({
+    required: ['userId', 'products', 'date', 'status'],
+}, orderSchema);
+
+const updateSchema = Object.assign({
+    required: ['id']
+}, orderSchema);
+
+module.exports = {
+    [SCHEMAS_TYPE.CREATE]: createSchema,
+    [SCHEMAS_TYPE.UPDATE]: updateSchema
+};

@@ -1,5 +1,11 @@
-const sendError = (res, msg = 'Item not found') => {
-    res.status(404).send({ error: msg });
+const sendError = (res, msg, code) => {
+    if (code && code !== 500) {
+        res.status(code).send({ error: msg });
+    } else {
+        res.status(500).send({ error: `Server not access. ${msg}` })
+    }
 };
 
-module.exports = { sendError };
+const errorService = { sendError };
+
+module.exports = errorService;

@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+
 const commentSchema = mongoose.Schema({
     id: mongoose.Schema.ObjectId,
     productId: String,

@@ -1,9 +1,8 @@
 const router = require('express').Router();
-const crudService = require('../../services/crudService');
-const validationMiddleware = require('./../../middlewares/validation');
-const OrderModel = require('./../../models/Order');
-
-const VALID_TYPE = 'order';
+const { crudService } = require('./../../services');
+const { dependencyMiddleware, validationMiddleware } = require('./../../middlewares');
+const { OrderModel, ProductModel, UserModel } = require('./../../models');
+const { SCHEMAS, SCHEMAS_TYPE } = require('./../../shared/constants');
 
 router.get(
     '/',
@@ -12,18 +11,22 @@ router.get(
 
 router.get(
     '/:id',
-    (req, res) => crudService.findAll(OrderModel, res, req.params.id)
+    (req, res) => crudService.findById(OrderModel, res, req.params.id)
 );
 
 router.post(
     '/',
-    (req, res, next) => validationMiddleware(req, res, next, VALID_TYPE),
+    validationMiddleware(SCHEMAS.ORDER, SCHEMAS_TYPE.CREATE),
+    dependencyMiddleware(ProductModel, 'products'),
+    dependencyMiddleware(UserModel, 'userId'),
     (req, res) => crudService.save(OrderModel, res, req.body)
 );
 
 router.put(
     '/:id',
-    (req, res, next) => validationMiddleware(req, res, next, VALID_TYPE),
+    validationMiddleware(SCHEMAS.ORDER, SCHEMAS_TYPE.UPDATE),
+    dependencyMiddleware(ProductModel, 'products'),
+    dependencyMiddleware(UserModel, 'userId'),
     (req, res) => crudService.updateById(OrderModel, res, req)
 );
 

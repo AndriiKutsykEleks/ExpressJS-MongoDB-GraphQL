@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+
 const categorySchema = mongoose.Schema({
     id: mongoose.Schema.ObjectId,
     parentId: String,

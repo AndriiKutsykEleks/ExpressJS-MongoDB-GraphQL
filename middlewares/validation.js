@@ -1,9 +1,10 @@
-const errorService = require('./../services/errorService');
-const validateService = require('./../services/validateService');
+const { errorService, validateService } = require('./../services');
 
-const validationMiddleware = (req, res, next, type) => {
-    const result = validateService.validateData(res, req.body, type);
-    result.valid ? next() : errorService.sendError(res, result.message);
+const validationMiddleware = (schema, type) => {
+    return (req, res, next) => {
+        const result = validateService.validateRequestData(req, res, { schema, type });
+        result.valid ? next() : errorService.sendError(res, result.message, 400);
+    };
 };
 
 module.exports = validationMiddleware;

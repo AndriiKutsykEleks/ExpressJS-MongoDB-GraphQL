@@ -1,6 +1,7 @@
+const { SCHEMAS_TYPE } = require('./../../shared/constants');
+
 const commentSchema = {
     type: 'object',
-    required: ['productId', 'userId', 'message', 'date', 'stars'],
     properties: {
         id: { type: 'string' },
         productId: { type: 'string' },
@@ -12,4 +13,15 @@ const commentSchema = {
     }
 };
 
-module.exports = commentSchema;
+const createSchema = Object.assign({
+    required: ['productId', 'userId', 'message', 'date', 'stars'],
+}, commentSchema);
+
+const updateSchema = Object.assign({
+    required: ['id'],
+}, commentSchema);
+
+module.exports = {
+    [SCHEMAS_TYPE.CREATE]: createSchema,
+    [SCHEMAS_TYPE.UPDATE]: updateSchema
+};

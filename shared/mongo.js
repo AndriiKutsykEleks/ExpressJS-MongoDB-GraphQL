@@ -1,8 +1,11 @@
-const config = require('../config/config');
+const config = require('./../config');
 const mongoose = require('mongoose');
-const db = `mongodb://${config.db.host}:${config.db.port}/${config.db.name}`;
+
 const mongoConnectPromise = mongoose
-    .connect(db, { useNewUrlParser: true })
+    .connect(
+        `mongodb://${config.db.host}:${config.db.port}/${config.db.name}`,
+        { useNewUrlParser: true }
+    )
     .then(client => {
         console.log(client);
     })
