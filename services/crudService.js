@@ -14,6 +14,13 @@ const findById = (model, res, id, isDataSend = true) => {
         .catch(err => sendError(res, err.message, err.code));
 };
 
+const findByKey = (model, res, params, isDataSend = true) => {
+    return model
+        .findOne(params)
+        .then(data => isDataSend ? res.status(200).send(data) : data)
+        .catch(err => sendError(res, err.message, err.code));
+};
+
 const save = (model, res, body, isDataSend = true) => {
     return model(body)
         .save()
@@ -51,6 +58,7 @@ const deleteById = (model, res, id, isDataSend = true) => {
 const crudService = {
     findAll,
     findById,
+    findByKey,
     save,
     updateById,
     deleteById

@@ -13,11 +13,11 @@ const productSchema = {
 };
 
 const createSchema = Object.assign({
-    required: ['name', 'costs', 'quantity', 'categoryId'],
+    required: ['name', 'costs', 'quantity', 'categoryId']
 }, productSchema);
 
 const updateSchema = Object.assign({
-    required: ['id'],
+    required: ['id']
 }, productSchema);
 
 module.exports = {

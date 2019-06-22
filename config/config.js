@@ -6,6 +6,9 @@ const config = {
         port: process.env.DB_PORT,
         name: process.env.DB_NAME,
         collection: process.env.DB_COLLECTION
+    },
+    jwt: {
+        privateKey: 'vbnczxasdhfgqweytruioljkmpdoenad'
     }
 };
 
