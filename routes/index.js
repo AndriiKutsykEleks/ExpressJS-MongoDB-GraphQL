@@ -4,7 +4,7 @@ const routes = require('./routes');
 const { access } = require('./../auth');
 
 router.use((req, res, next) => access(req, res, next));
-router.use('/api', api);
+router.use('/api/v1', api);
 router.use('/', routes);
 
 module.exports = router;

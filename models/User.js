@@ -7,7 +7,8 @@ const userSchema = mongoose.Schema({
     lastName: String,
     dob: Number,
     isAdmin: Boolean,
-    password: String
+    password: String,
+    email: String
 });
 
 userSchema.pre(

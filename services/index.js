@@ -1,9 +1,9 @@
 const crudService = require('./crudService');
-const errorService = require('./errorService');
+const sendService = require('./sendService');
 const validateService = require('./validateService');
 
 module.exports = {
     crudService,
-    errorService,
+    sendService,
     validateService
 };

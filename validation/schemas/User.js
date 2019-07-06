@@ -8,16 +8,17 @@ const userSchema = {
         lastName: { type: 'string' },
         dob: { type: 'number' },
         isAdmin: { type: 'boolean' },
-        password: { type: 'string' }
+        password: { type: 'string' },
+        email: { type: 'string' }
     }
 };
 
 const createSchema = Object.assign({
-    required: ['firstName', 'lastName', 'dob', 'password']
+    required: ['firstName', 'lastName', 'dob', 'password', 'email']
 }, userSchema);
 
 const readSchema = Object.assign({
-    required: ['firstName', 'password']
+    required: ['email', 'password']
 }, userSchema);
 
 const updateSchema = Object.assign({

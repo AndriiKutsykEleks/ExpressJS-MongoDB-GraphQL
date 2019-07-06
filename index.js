@@ -3,7 +3,7 @@ const bodyParser = require('body-parser');
 const config = require('./config');
 const routes = require('./routes');
 const mongoConnect = require('./shared/mongo');
-const { sendError } = require('./services/errorService');
+const { sendError } = require('./services/sendService');
 
 const app = express();
 
