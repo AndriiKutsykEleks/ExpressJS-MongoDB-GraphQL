@@ -9,25 +9,21 @@ const access = async (req, res, next) => {
 };
 
 const isAuthorized = async (req, res) => {
-    try {
-        const token = req.headers.authorization.split(' ')[1];
-
-        return await jwt.verify(token, config.jwt.privateKey, (error, payload) => {
-            if (error) {
-                throw new Error();
-            }
-
-            if (payload) {
-                return crudService
-                    .findById(UserModel, res, payload.userId, false)
-                    .then(result => !(result instanceof Error));
-            } else {
-                throw new Error();
-            }
-        });
-    } catch (error) {
+    if (!req.headers.authorization) {
         return false;
     }
+
+    const token = req.headers.authorization.split(' ')[1];
+
+    return await jwt.verify(token, config.jwt.privateKey, (error, payload) => {
+        if (error || !payload) {
+            return false;
+        }
+
+        return crudService
+            .findById(UserModel, res, payload.userId, false)
+            .then(result => !(result instanceof Error));
+    });
 };
 
 const hasPermissions = (req, res, next) => {
