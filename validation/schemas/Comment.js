@@ -14,11 +14,11 @@ const commentSchema = {
 };
 
 const createSchema = Object.assign({
-    required: ['productId', 'userId', 'message', 'date', 'stars'],
+    required: ['productId', 'userId', 'message', 'date', 'stars']
 }, commentSchema);
 
 const updateSchema = Object.assign({
-    required: ['id'],
+    required: ['id']
 }, commentSchema);
 
 module.exports = {

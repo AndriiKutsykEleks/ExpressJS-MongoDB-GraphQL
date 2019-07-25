@@ -16,7 +16,7 @@ const orderSchema = {
 };
 
 const createSchema = Object.assign({
-    required: ['userId', 'products', 'date', 'status'],
+    required: ['userId', 'products', 'date', 'status']
 }, orderSchema);
 
 const updateSchema = Object.assign({

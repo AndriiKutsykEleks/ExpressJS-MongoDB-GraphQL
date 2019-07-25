@@ -1,17 +1,24 @@
-const { sendError } = require('./errorService');
+const { sendError, sendSuccess } = require('./sendService');
 
 const findAll = (model, res, isDataSend = true) => {
     return model
         .find({})
-        .then(data => isDataSend ? res.status(200).send(data) : data)
-        .catch(err => sendError(res, err.message, err.code));
+        .then(data => isDataSend ? sendSuccess(res, data) : data)
+        .catch(err => crudError(res, err, isDataSend));
 };
 
 const findById = (model, res, id, isDataSend = true) => {
     return model
         .findById(id)
-        .then(data => isDataSend ? res.status(200).send(data) : data)
-        .catch(err => sendError(res, err.message, err.code));
+        .then(data => isDataSend ? sendSuccess(res, data) : data)
+        .catch(err => crudError(res, err, isDataSend));
+};
+
+const findByKey = (model, res, params, isDataSend = true) => {
+    return model
+        .findOne(params)
+        .then(data => isDataSend ? sendSuccess(res, data) : data)
+        .catch(err => crudError(res, err, isDataSend));
 };
 
 const save = (model, res, body, isDataSend = true) => {
@@ -19,9 +26,9 @@ const save = (model, res, body, isDataSend = true) => {
         .save()
         .then(data => {
             const msg = `${ model.modelName } is saved`;
-            return isDataSend ? res.status(200).send({ msg }) : data;
+            return isDataSend ? sendSuccess(res, { msg }) : data;
         })
-        .catch(err => sendError(res, err.message, err.code));
+        .catch(err => crudError(res, err, isDataSend));
 };
 
 const updateById = (model, res, req, isDataSend = true) => {
@@ -33,9 +40,9 @@ const updateById = (model, res, req, isDataSend = true) => {
         )
         .then(data => {
             const msg = `${ model.modelName } is updated`;
-            return isDataSend ? res.status(200).send({ msg }) : data;
+            return isDataSend ? sendSuccess(res, { msg }) : data;
         })
-        .catch(err => sendError(res, err.message, err.code));
+        .catch(err => crudError(res, err, isDataSend));
 };
 
 const deleteById = (model, res, id, isDataSend = true) => {
@@ -43,14 +50,19 @@ const deleteById = (model, res, id, isDataSend = true) => {
         .findOneAndRemove({ _id: id })
         .then(data => {
             const msg = `${ model.modelName } is deleted`;
-            return isDataSend ? res.status(200).send({ msg }) : data;
+            return isDataSend ? sendSuccess(res, { msg }) : data;
         })
-        .catch(err => error(res, err.message, err.code));
+        .catch(err => crudError(res, err, isDataSend));
+};
+
+const crudError = (res, error, isDataSend) => {
+    return isDataSend ? sendError(res, error.message, error.code) : error;
 };
 
 const crudService = {
     findAll,
     findById,
+    findByKey,
     save,
     updateById,
     deleteById

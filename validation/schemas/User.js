@@ -7,19 +7,26 @@ const userSchema = {
         firstName: { type: 'string' },
         lastName: { type: 'string' },
         dob: { type: 'number' },
-        isAdmin: { type: 'boolean' }
+        isAdmin: { type: 'boolean' },
+        password: { type: 'string' },
+        email: { type: 'string' }
     }
 };
 
 const createSchema = Object.assign({
-    required: ['firstName', 'lastName', 'dob'],
+    required: ['firstName', 'lastName', 'dob', 'password', 'email']
+}, userSchema);
+
+const readSchema = Object.assign({
+    required: ['email', 'password']
 }, userSchema);
 
 const updateSchema = Object.assign({
-    required: ['id'],
+    required: ['id']
 }, userSchema);
 
 module.exports = {
     [SCHEMAS_TYPE.CREATE]: createSchema,
+    [SCHEMAS_TYPE.READ]: readSchema,
     [SCHEMAS_TYPE.UPDATE]: updateSchema
 };

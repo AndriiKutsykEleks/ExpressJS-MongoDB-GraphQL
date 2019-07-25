@@ -7,7 +7,7 @@ const mongoConnectPromise = mongoose
         { useNewUrlParser: true }
     )
     .then(client => {
-        console.log(client);
+        console.log('Mongo Connect');
     })
     .catch(err => {
         throw err;
